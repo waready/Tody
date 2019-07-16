@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>La ruleta de la muerte</title>
+    <script src="js/Winwheel.min.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/app.js"></script>
+    <link href="css/sweetalert.css" rel="stylesheet" />
+
+    <link rel="manifest" href="manifest.json">    
+    <!-- Android -->
+    <meta name="theme-color" content="#3498db"> 
+</head>
+<body>
+    <form id="form1" runat="server" class="container">
+    <div>
+        <style>
+            #canvasContainer {
+                background-image: url(img/Muerte.png);
+                background-repeat: no-repeat;  
+                background-position: center;   
+                width: 110%;                  
+                height: 90%;
+                cursor:pointer;		
+            }
+        </style>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 text-center">  
+				<h1>Bienvenidos a TODI - PWA</h1>
+                    <div class="card bg-warning">
+                        <div class="card-body">
+                            <h4 class="card-title">Lista de elementos:</h4>    
+                            <textarea id="ListaElementos" class="form-control" rows="13">
+Tomo
+Tomamos
+Toman
+Izquierda
+Derecha
+Obliga
+                            </textarea>
+                            <br/>
+                                <input type="button" onclick="leerElementos()" class="btn btn-danger btn-lg btn-block" value="Generar Ruleta"/>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <br/>
+                        <input id="bigButton" class="btn-block btn-lg btn btn-success " 
+                        onclick="objRuleta.startAnimation(); this.disabled=true;" value="Girar" type="button"/>
+
+                        <div id="canvasContainer"  class="centrado"
+                            onclick="objRuleta.startAnimation();bigButton.disabled = true;">
+                            <canvas id='Ruleta' width='700' height='690'>
+                                Canvas not supported, use another browser.
+                            </canvas> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+     <script>
+        var objRuleta;
+        var winningSegment;
+        var distnaciaX = 150;
+        var distnaciaY = 50;
+        var ctx ;
+        function Mensaje() {
+            winningSegment = objRuleta.getIndicatedSegment();
+            swal({
+                title: " ¡ "+winningSegment.text+" !",
+            
+                imageUrl: "img/Muerte.png",
+                // showCancelButton: true,
+                confirmButtonColor: "#e74c3c",
+                confirmButtonText: "Ok, Reiniciar"
+                // cancelButtonText: "Quitar elemento",
+                // closeOnConfirm: true,
+                // closeOnCancel: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                } else {
+                    $('#ListaElementos').val($('#ListaElementos').val().replace(winningSegment.text,""));
+                    leerElementos();
+                }
+                objRuleta.stopAnimation(false);
+                objRuleta.rotationAngle = 0;
+                objRuleta.draw();
+                DibujarTriangulo();
+                bigButton.disabled = false;
+            });
+        }
+
+        function DibujarTriangulo() {
+            distnaciaX = 150;
+            distnaciaY = 50;
+            ctx = objRuleta.ctx;
+            ctx.strokeStyle = 'navy';
+            ctx.fillStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(distnaciaX + 170, distnaciaY + 5);
+            ctx.lineTo(distnaciaX + 230, distnaciaY + 5);
+            ctx.lineTo(distnaciaX + 200, distnaciaY + 40);
+            ctx.lineTo(distnaciaX + 171, distnaciaY + 5);
+            ctx.stroke();
+            ctx.fill();
+        }
+
+        function DibujarRuleta(ArregloElementos) {
+            
+            objRuleta = new Winwheel({
+                'canvasId': 'Ruleta',
+                'numSegments': ArregloElementos.length,
+                'outerRadius': 270,
+                'innerRadius': 80,
+                'segments':ArregloElementos,
+                'animation':
+                {
+                    'type': 'spinToStop',
+                    'duration':4,
+                    'spins': 15,
+                    'callbackFinished': 'Mensaje()',
+                    'callbackAfter': 'DibujarTriangulo()'     
+                }, 
+            });
+            DibujarTriangulo();
+        }
+
+        function leerElementos() {
+                txtListaElementos=$('#ListaElementos').val().trim();
+                var Elementos = txtListaElementos.split('\n');
+                var ElementosRuleta= [];
+                Elementos.forEach(function (Elemento) {
+                    if(Elemento){
+                    ElementosRuleta.push({ 'fillStyle': "#" + ((1 << 24) * Math.random() | 0).toString(16), 'text': Elemento });
+                    }
+                });
+                DibujarRuleta(ElementosRuleta);
+            } 
+            leerElementos();
+            </script>
+    </div>
+    </form>
+</body>
+</html>
