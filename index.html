@@ -3,7 +3,7 @@
 <html>
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>La ruleta de la muerte</title>
+    <title>|Tody|</title>
     <script src="js/Winwheel.min.js"></script>
     <script src="js/TweenMax.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -12,17 +12,18 @@
     <script src="js/sweetalert.min.js"></script>
     <script src="js/app.js"></script>
     <link href="css/sweetalert.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
 
     <link rel="manifest" href="manifest.json">    
     <!-- Android -->
-    <meta name="theme-color" content="#3498db"> 
+    <meta name="theme-color" content="#9E1D90"> 
 </head>
 <body>
     <form id="form1" runat="server" class="container">
     <div>
         <style>
             #canvasContainer {
-                background-image: url(img/Muerte.png);
+                background-image: url(img/icons/152x152.png);
                 background-repeat: no-repeat;  
                 background-position: center;   
                 width: 110%;                  
@@ -79,7 +80,7 @@ Obliga
             swal({
                 title: " ¡ "+winningSegment.text+" !",
             
-                imageUrl: "img/Muerte.png",
+                imageUrl: "img/icons/152x152.png",
                 // showCancelButton: true,
                 confirmButtonColor: "#e74c3c",
                 confirmButtonText: "Ok, Reiniciar"

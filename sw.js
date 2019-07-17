@@ -9,7 +9,7 @@ const Inmutalbe_cache = 'inmutable-v1';
 const APP_SHELL = [
    // '/',
     'index.html',
-    'img/Muerte.png',   
+    'img/icons/152x152.png',   
     'img/favicon.ico',
     'js/app.js',
     'js/sw-utils.js'
