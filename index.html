@@ -24,22 +24,33 @@
     <meta name="theme-color" content="#9E1D90"> 
 </head>
 <body>
-    <form id="form1" runat="server" class="container">
+<nav class="navbar navbar-dark navbar-expand-md justify-content-between" style="background-color: rgb(170, 21, 153);">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse dual-nav w-50 order-1 order-md-0">
+            </div>
+            <a href="/" class="navbar-brand mx-auto d-block text-center order-0 order-md-1 w-25 text-uppercase">Bienvenidos a TODI - PWA</a>
+            <div class="navbar-collapse collapse dual-nav w-50 order-2">
+            </div>
+        </div>
+    </nav>
+    <form id="form1" runat="server" class="container mt-1">
     <div>
         <style>
-            #canvasContainer {
+            .canvasContainer {
                 background-image: url(img/icons/152x152.png);
                 background-repeat: no-repeat;  
                 background-position: center;   
-                width: 110%;                  
-                height: 90%;
+                width: 100%;                  
+                height: 100%;
                 cursor:pointer;		
             }
         </style>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 text-center">  
-				<h1>Bienvenidos a TODI - PWA</h1>
                     <div class="card bg-warning">
                         <div class="card-body">
                             <h4 class="card-title">Lista de elementos:</h4>    
@@ -59,14 +70,14 @@ Obliga
                 </div>
             </div>
                 <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-12">
                         <br/>
                         <input id="bigButton" class="btn-block btn-lg btn btn-success " 
                         onclick="objRuleta.startAnimation(); this.disabled=true;" value="Girar" type="button"/>
 
-                        <div id="canvasContainer"  class="centrado"
+                        <div  class="centrado"
                             onclick="objRuleta.startAnimation();bigButton.disabled = true;">
-                            <canvas id='Ruleta' width='700' height='690'>
+                            <canvas id='Ruleta' class="canvasContainer"  width='700' height='700'>
                                 Canvas not supported, use another browser.
                             </canvas> 
                         </div>
@@ -129,7 +140,7 @@ Obliga
                 'canvasId': 'Ruleta',
                 'numSegments': ArregloElementos.length,
                 'outerRadius': 270,
-                'innerRadius': 80,
+                'innerRadius': 70,
                 'segments':ArregloElementos,
                 'animation':
                 {
